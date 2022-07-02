@@ -1,3 +1,38 @@
 @hostname=http://localhost:8000
 
-get {{hostname}}
+get {{hostname}}/api/songs/
+
+###
+
+POST {{hostname}}/api/songs/ 
+Content-Type: application/json
+
+{
+  "title": "title",
+  "artist": "artist",
+  "album": "album",
+  "genre": "genre",
+  "year": "year",
+  "track": "track",
+  "duration": "duration",
+  "bitrate": "bitrate",
+  "size": "size",
+  "file": "file"
+}
+###
+
+PUT {{hostname}}/api/songs/7
+Content-Type: application/json
+
+{
+  
+  "file": "file"
+}
+###
+delete {{hostname}}/api/songs/7
+Content-Type: application/json
+
+{
+  
+  "file": "file"
+}
