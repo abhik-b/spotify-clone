@@ -1,19 +1,23 @@
+const asyncHandler = require('express-async-handler')
+
+
+
 // @desc Get Songs
 // @route Get /api/songs
-const getSongs = (req, res) => {
+const getSongs = asyncHandler(async (req, res) => {
     res.json({ message: "Welcome to the API" });
-}
+})
 
 
-const postSongs = (req, res) => {
+const postSongs = asyncHandler(async (req, res) => {
     res.json({ message: req.body });
-}
-const putSongs = (req, res) => {
+})
+const putSongs = asyncHandler(async (req, res) => {
     res.json({ message: `update ${req.params.id}` });
-}
-const deleteSongs = (req, res) => {
+})
+const deleteSongs = asyncHandler(async (req, res) => {
     res.json({ message: `delete ${req.params.id}` });
-}
+})
 
 
 module.exports = { getSongs, postSongs, putSongs, deleteSongs };
