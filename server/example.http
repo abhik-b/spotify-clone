@@ -8,8 +8,8 @@ POST {{hostname}}/api/songs/
 Content-Type: application/json
 
 {
-  "title": "title",
-  "artist": "artist",
+  "title": "title4",
+  "artist": "artist3",
   "album": "album",
   "genre": "genre",
   "year": "year",
@@ -21,18 +21,12 @@ Content-Type: application/json
 }
 ###
 
-PUT {{hostname}}/api/songs/7
+PUT {{hostname}}/api/songs/62c13720bde41a63143fe53e
 Content-Type: application/json
 
 {
   
-  "file": "file"
+  "title": "file"
 }
 ###
-delete {{hostname}}/api/songs/7
-Content-Type: application/json
-
-{
-  
-  "file": "file"
-}
+delete {{hostname}}/api/songs/62c137b26e394e79c095dc62
