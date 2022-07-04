@@ -12,6 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/api/songs/', require('./routes/songsRoutes'));
+app.use('/api/user/', require('./routes/userRoutes'));
 
 app.use(errorHandler);
 app.listen(port, () => {

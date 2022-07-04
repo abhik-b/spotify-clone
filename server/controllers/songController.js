@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler')
-const Song = require('../models/songModel')
+const { Song } = require('../models/songModel')
 const mongoose = require('mongoose')
 
 // @desc Get Songs

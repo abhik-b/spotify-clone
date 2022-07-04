@@ -8,8 +8,8 @@ POST {{hostname}}/api/songs/
 Content-Type: application/json
 
 {
-  "title": "title4",
-  "artist": "artist3",
+  "title": "title2",
+  "artist": "artist0",
   "album": "album",
   "genre": "genre",
   "year": "year",

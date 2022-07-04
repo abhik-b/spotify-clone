@@ -1,0 +1,26 @@
+@hostname=http://localhost:8000
+
+get {{hostname}}/api/user/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYzE3ZjQyMGQzNDliM2RkZGZlNzcyNCIsImlhdCI6MTY1NjkwNjcwMywiZXhwIjoxNjU5NDk4NzAzfQ.jpsPzVYLVUter0ChYmDEraIvCG-TPTK0M5oXdC-YqVQ
+
+###
+
+POST {{hostname}}/api/user/register/
+Content-Type: application/json
+
+{
+  "name": "user2", 
+  "email": "email2",
+  "password": "1234",
+  "gender": "male"
+}
+###
+
+POST {{hostname}}/api/user/login/
+Content-Type: application/json
+
+{
+  "email": "email1",
+  "password": "1234"
+}
+###

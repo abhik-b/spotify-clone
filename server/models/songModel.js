@@ -19,4 +19,4 @@ const songSchema = new mongoose.Schema({
     "artist": String,
 }, { timestamps: true });
 
-module.exports = mongoose.model('Song', songSchema);
+module.exports = { Song: mongoose.model('Song', songSchema), songSchema };
