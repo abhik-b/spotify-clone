@@ -1,0 +1,58 @@
+@hostname=http://localhost:8000
+@playlist_id=62c26b8981b935a234ba09af
+@token1=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYzE3ZjQyMGQzNDliM2RkZGZlNzcyNCIsImlhdCI6MTY1NjkwNjcwMywiZXhwIjoxNjU5NDk4NzAzfQ.jpsPzVYLVUter0ChYmDEraIvCG-TPTK0M5oXdC-YqVQ
+
+@token2=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYzE4MDE0M2IzZmRkZTVjYTlmNzUzOCIsImlhdCI6MTY1Njk4NjE4MCwiZXhwIjoxNjU5NTc4MTgwfQ.YAVbOy9MJ_aKBz8hShPpw-ljYWAE4_O90bBZofQSdWI
+
+get {{hostname}}/api/playlists/
+Authorization: Bearer {{token1}}
+
+###
+
+
+get {{hostname}}/api/playlists/{{playlist_id}}
+Authorization: Bearer {{token1}}
+
+
+
+###
+
+
+delete {{hostname}}/api/playlists/62c41a004994ba3cf30fe178
+Authorization: Bearer {{token1}}
+
+###
+post {{hostname}}/api/playlists/
+Authorization: Bearer {{token1}}
+Content-Type: application/json
+
+{
+  "name": "playlist3"
+}
+
+### 
+post {{hostname}}/api/playlists/
+Authorization: Bearer {{token2}}
+Content-Type: application/json
+
+{
+  "name": "playlist1"
+}
+
+###
+post {{hostname}}/api/playlists/addSong/{{playlist_id}}
+Authorization: Bearer {{token1}}
+Content-Type: application/json
+
+{
+  "song": "62c16d5cb228a72bca9f7df9"
+}
+
+###
+post {{hostname}}/api/playlists/removeSong/{{playlist_id}}
+Authorization: Bearer {{token1}}
+Content-Type: application/json
+
+{
+  "song": "62c16d5cb228a72bca9f7df9"
+}
