@@ -8,7 +8,6 @@ const getPlaylists = asyncHandler(async (req, res) => {
     res.json({ message: 'AllPlaylists', playlists });
 })
 
-
 const getPlaylist = asyncHandler(async (req, res) => {
     const playlist = await Playlist.findById(req.params.playlistID)
     const songs = await Song.find({ _id: playlist.songs })
