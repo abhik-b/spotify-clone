@@ -54,7 +54,16 @@ const loginUser = asyncHandler(async (req, res) => {
     // const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' })
 })
 
+const userExists = asyncHandler(async (req, res) => {
+    const { email } = req.body.email
+    const userExists = await User.findOne({ email })
+    if (userExists) {
+        res.json({ userExists })
+    } else {
+        res.json({ userExists: false })
 
+    }
+})
 
 
 const getCurrentUser = asyncHandler(async (req, res) => {
@@ -65,4 +74,4 @@ const generateToken = id => {
     return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' })
 }
 
-module.exports = { registerUser, loginUser, getCurrentUser }
+module.exports = { registerUser, loginUser, getCurrentUser, userExists }
