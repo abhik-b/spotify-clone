@@ -4,8 +4,8 @@ const User = require('../models/userModel')
 const { Song } = require('../models/songModel')
 
 const getPlaylists = asyncHandler(async (req, res) => {
-    const playlists = await Playlist.find({ user: req.user.id })
-    res.json({ message: 'AllPlaylists', playlists });
+    const playlists = await Playlist.find({ user: req.user._id })
+    res.json({ message: `AllPlaylists of user : ${req.user.name}`, playlists });
 })
 
 const getPlaylist = asyncHandler(async (req, res) => {

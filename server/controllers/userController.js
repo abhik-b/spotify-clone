@@ -1,8 +1,8 @@
 const asyncHandler = require('express-async-handler')
-const User = require('../models/userModel')
 const mongoose = require('mongoose')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
+const { User, Accounts } = require('../models/userModel')
 
 
 const registerUser = asyncHandler(async (req, res) => {
@@ -55,10 +55,11 @@ const loginUser = asyncHandler(async (req, res) => {
 })
 
 const userExists = asyncHandler(async (req, res) => {
-    const { email } = req.body.email
+    const { email } = req.body
     const userExists = await User.findOne({ email })
     if (userExists) {
-        res.json({ userExists })
+        let account = await Accounts.findOne({ userId: userExists._id })
+        res.json({ userExists: { ...userExists._doc, token: account.id_token } })
     } else {
         res.json({ userExists: false })
 
@@ -74,4 +75,19 @@ const generateToken = id => {
     return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' })
 }
 
-module.exports = { registerUser, loginUser, getCurrentUser, userExists }
+const editUser = asyncHandler(async (req, res) => {
+    // console.log(req.user)
+    const userExists = await User.findById(req.user._id)
+    if (userExists) {
+        console.log('user : ', userExists._id.toString())
+        let updatedUser = await User.findByIdAndUpdate(userExists._id.toString(), req.body, { new: true })
+        console.log('updatedUser : ', updatedUser)
+        res.status(200).json({ ...updatedUser._doc })
+    } else {
+        res.status(400)
+        res.json({ userExists: false })
+
+    }
+})
+
+module.exports = { registerUser, loginUser, getCurrentUser, userExists, editUser }

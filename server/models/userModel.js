@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const { songSchema } = require('./songModel');
 
+const ObjectID = mongoose.Schema.Types.ObjectId;
+
 const userSchema = mongoose.Schema({
     name: {
         type: String, required: [true, 'Name is required'],
@@ -28,4 +30,13 @@ const userSchema = mongoose.Schema({
     timestamp: true,
 });
 
-module.exports = mongoose.model('User', userSchema);
+const accountSchema = mongoose.Schema({
+    id_token: {
+        type: String, required: [true, 'Token is required'],
+    },
+    userId: {
+        type: ObjectID, ref: 'User', required: true
+    }
+}, { timestamp: true });
+
+module.exports = { User: mongoose.model('User', userSchema), Accounts: mongoose.model('Accounts', accountSchema) };
