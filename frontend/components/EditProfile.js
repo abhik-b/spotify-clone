@@ -1,21 +1,36 @@
+import { useRouter } from 'next/router'
 import React, { useState, useEffect } from 'react'
 import { updateUser } from '../fetchers/fetchUser'
-export default function EditProfile({ user, mutate, token }) {
+
+
+
+export default function EditProfile({ user, mutate, token, editing }) {
     const [gender, setGender] = useState('')
-    const [disabled, setDisabled] = useState(true);
+    const [isAdmin, setisAdmin] = useState(false)
+    const [disabled, setdisabled] = useState(true);
+    const updatedData = {};
+    const router = useRouter()
 
     const onSubmit = async (e) => {
         e.preventDefault()
         if (gender !== '') {
-            let updatedUser = await updateUser('/edit/', token,
-                { gender });
-            mutate(updatedUser)
+            if (editing) {
+                updatedData = { gender }
+            } else {
+                updatedData = { gender, isAdmin }
+            }
+            let updatedUser = await updateUser('/edit/',
+                token, updatedData
+            );
+            if (mutate) mutate(updatedUser)
+            if (router.query.callbackUrl) router.push(router.query.callbackUrl || '/')
         }
     }
 
     useEffect(() => {
         if (user) {
-            setGender(user.gender)
+            if (user.gender) setGender(user.gender)
+            setisAdmin(user.isAdmin)
         }
     }, [user])
 
@@ -24,34 +39,33 @@ export default function EditProfile({ user, mutate, token }) {
         <form onSubmit={onSubmit}>
             <div>
                 <label htmlFor="gender">Gender :</label>
-                {user?.gender ?
-                    <span>{user.gender}</span>
-                    : <input
-                        type="text"
-                        name="gender" value={gender}
-                        onChange={(e) => {
-                            if (disabled) setDisabled(false)
-                            setGender(e.target.value);
-                            if (e.target.value === '') setDisabled(true)
-                        }}
-                    />
-                }
-            </div>
-            <div>
-                <label htmlFor="gender">Gender :</label>
                 <input
                     type="text"
                     name="gender"
                     value={gender}
                     onChange={(e) => {
-                        if (disabled) setDisabled(false)
+                        if (disabled) setdisabled(false)
                         setGender(e.target.value);
-                        if (e.target.value === '') setDisabled(true)
+                        if (e.target.value === '') setdisabled(true)
                     }}
                 />
             </div>
 
-
+            <div>
+                <label
+                    className={editing ? 'disabled-text' : ''}
+                    htmlFor="isAdmin">Artist Account :</label>
+                <input
+                    type="checkbox"
+                    name="isAdmin"
+                    checked={isAdmin}
+                    disabled={editing ? true : false}
+                    onChange={(e) => {
+                        setisAdmin(e.target.checked);
+                        console.log(e.target.checked, isAdmin)
+                    }}
+                />
+            </div>
             {!disabled && <button type="submit" >Save</button>}
         </form>
     )

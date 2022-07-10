@@ -14,8 +14,16 @@ export default function Home() {
 
       <User />
 
+      {/* Get Songs */}
+      {/* Like Songs Button which can add a song to user's liked songs array */}
+
 
     </div>
   )
 
 }
+export const getStaticProps = async context => {
+  return {
+    props: {},
+  };
+};
