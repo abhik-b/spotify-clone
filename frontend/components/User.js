@@ -15,7 +15,7 @@ export default function User() {
     }
 
     const { data: user, mutate } = useUser(session);
-    // const { data: user, mutate } = useSWR(() => session?.accessToken ? [`/me/`, session?.accessToken] : null, getCurrentUser);
+
     if (!user) return <button onClick={() => signIn('google')}>Sign In with Google</button>;
     return (
         <>
@@ -24,3 +24,4 @@ export default function User() {
         </>
     )
 }
+

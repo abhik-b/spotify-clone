@@ -16,6 +16,7 @@ export default function Home() {
 
       {/* Get Songs */}
       {/* Like Songs Button which can add a song to user's liked songs array */}
+      {/* If User's profile is incompleted then redirect to profile */}
 
 
     </div>
