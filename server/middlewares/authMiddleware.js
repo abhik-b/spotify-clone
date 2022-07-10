@@ -8,11 +8,10 @@ const protect = asyncHandler(async (req, res, next) => {
         try {
             token = req.headers.authorization.split(' ')[1]
             const decoded = jwt.decode(token)
-            console.log(decoded)
             req.user = await User.findOne({ email: decoded.email }).select('-password')
             next()
         } catch (error) {
-            console.log(error)
+            console.log('auth middleware - >', error)
             res.status(401)
             throw new Error('Not authorized')
         }

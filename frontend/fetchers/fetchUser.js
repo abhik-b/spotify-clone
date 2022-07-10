@@ -9,8 +9,6 @@ export const getCurrentUser = async (url, token) => {
     })
         .then((res) => res.json())
         .then((data) => {
-            console.log('user - >', data.user)
-
             if (data) return data.user
             return undefined
         })

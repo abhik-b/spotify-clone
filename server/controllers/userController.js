@@ -79,9 +79,7 @@ const editUser = asyncHandler(async (req, res) => {
     // console.log(req.user)
     const userExists = await User.findById(req.user._id)
     if (userExists) {
-        console.log('user : ', userExists._id.toString())
         let updatedUser = await User.findByIdAndUpdate(userExists._id.toString(), req.body, { new: true })
-        console.log('updatedUser : ', updatedUser)
         res.status(200).json({ ...updatedUser._doc })
     } else {
         res.status(400)
