@@ -1,6 +1,6 @@
 import { useSession, signIn, signOut } from 'next-auth/react'
 import Head from 'next/head'
-import { getCurrentUser, updateUser } from '../fetchers/fetchUser'
+import { getCurrentUser, updateUser } from '../../fetchers/fetchUser'
 import styles from '../styles/Home.module.css'
 import useSWR from 'swr'
 import EditProfile from '../components/EditProfile'
