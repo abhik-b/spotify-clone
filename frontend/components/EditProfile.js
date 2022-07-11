@@ -8,7 +8,7 @@ export default function EditProfile({ user, mutate, token, editing }) {
     const [gender, setGender] = useState('')
     const [isAdmin, setisAdmin] = useState(false)
     const [disabled, setdisabled] = useState(true);
-    const updatedData = {};
+    let updatedData = {};
     const router = useRouter()
 
     const onSubmit = async (e) => {

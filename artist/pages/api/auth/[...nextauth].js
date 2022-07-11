@@ -1,7 +1,5 @@
 import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
-import { MongoDBAdapter } from "@next-auth/mongodb-adapter"
-import clientPromise from "./lib/mongo"
 
 const getDomainWithoutSubdomain = url => {
     const urlParts = new URL(url).hostname.split('.');
@@ -12,9 +10,9 @@ const getDomainWithoutSubdomain = url => {
         .join('.');
 };
 
-const useSecureCookies = process.env.NEXT_AUTH_URL.startsWith('https://');
+const useSecureCookies = process.env.NEXTAUTH_URL.startsWith('https://');
 const cookiePrefix = useSecureCookies ? '__Secure' : '';
-const hostName = getDomainWithoutSubdomain(process.env.NEXT_AUTH_URL);
+const hostName = getDomainWithoutSubdomain(process.env.NEXTAUTH_URL);
 
 
 const cookies = {
@@ -34,11 +32,7 @@ const cookies = {
 };
 
 
-
-
-
 export default NextAuth({
-    adapter: MongoDBAdapter(clientPromise),
     providers: [
         GoogleProvider({
             clientId: process.env.NEXT_AUTH_GOOGLE_ID,
@@ -49,10 +43,8 @@ export default NextAuth({
     secret: process.env.NEXT_AUTH_SECRET,
     useSecureCookies,
     session: { strategy: 'jwt' },
-    pages: {
-        'newUser': '/profile',
-    },
     callbacks: {
+        async signIn({ user, account, profile, email, credentials }) { return null },
         async jwt({ token, account }) {
             if (account) {
                 token.accessToken = account.id_token
