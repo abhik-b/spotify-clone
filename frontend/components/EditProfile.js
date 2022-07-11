@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import React, { useState, useEffect } from 'react'
-import { updateUser } from '../fetchers/fetchUser'
+import { updateUser } from '../../fetchers/fetchUser'
 
 
 
