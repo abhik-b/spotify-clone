@@ -1,8 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  font-family:'Montserrat', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
@@ -13,4 +18,32 @@ a {
 
 * {
   box-sizing: border-box;
+  margin:0;
+  padding: 0;
+}
+
+
+.recent-song-element{
+  @apply pt-2 pr-4  my-6;
+}
+.recent-song-element button{
+  background: black;
+  letter-spacing: .1em;
+  text-transform: capitalize;
+}
+.recent-song-element button:hover{
+  background: rgb(54, 54, 54);
+}
+
+
+
+.song{
+  @apply flex items-center justify-between;
+}
+.song p{
+  text-overflow: ellipsis;
+  width:33%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: left;
 }
