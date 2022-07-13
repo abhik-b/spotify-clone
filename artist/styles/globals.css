@@ -23,27 +23,33 @@ a {
 }
 
 
-.recent-song-element{
+.recent-playlist-element{
   @apply pt-2 pr-4  my-6;
 }
-.recent-song-element button{
+.recent-playlist-element button{
   background: black;
   letter-spacing: .1em;
   text-transform: capitalize;
 }
-.recent-song-element button:hover{
+.recent-playlist-element button:hover{
   background: rgb(54, 54, 54);
 }
 
 
 
-.song{
+.playlist{
   @apply flex items-center justify-between;
 }
-.song p{
+.playlist p{
   text-overflow: ellipsis;
   width:33%;
   white-space: nowrap;
   overflow: hidden;
   text-align: left;
+}
+
+.card.image-full::before{
+
+background-color: rgba(1, 1, 1, 0.5);
+background: linear-gradient(to top, rgba(1, 1, 1, 1.0) 40%, rgba(1,1,1, 0.5));
 }

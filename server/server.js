@@ -2,6 +2,10 @@ require("dotenv").config();
 const express = require("express");
 const port = process.env.PORT || 5000;
 const cors = require('cors')
+var bodyParser = require("body-parser");
+
+
+
 const { errorHandler } = require('./middlewares/errorMiddleware');
 const { connectDB } = require('./config/db');
 const { options } = require("./routes/songsRoutes");
@@ -17,7 +21,10 @@ let corsOptions = {
 
 
 app.use(cors(corsOptions));
-
+app.use(bodyParser.json()); // Configures bodyParser to accept JSON
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

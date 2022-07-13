@@ -17,6 +17,11 @@ const songSchema = new mongoose.Schema({
 
     },
     "artist": String,
+    "source": {
+        file: { type: Buffer, required: true },
+        filename: { type: String, required: true },
+        mimetype: { type: String, required: true }
+    }
 }, { timestamps: true });
 
 module.exports = { Song: mongoose.model('Song', songSchema), songSchema };

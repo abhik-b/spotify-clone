@@ -1,7 +1,8 @@
 const asyncHandler = require('express-async-handler')
 const { Song } = require('../models/songModel')
 const mongoose = require('mongoose')
-
+const formidable = require('formidable')
+const fs = require('fs')
 // @desc Get Songs
 // @route Get /api/songs
 const getSongs = asyncHandler(async (req, res) => {
@@ -10,14 +11,25 @@ const getSongs = asyncHandler(async (req, res) => {
 })
 
 
-const postSongs = asyncHandler(async (req, res) => {
-    if (!req.body.title || !req.body.artist) {
-        res.status(400);
-        throw new Error('Please enter all fields');
-    }
-    const song = await Song.create(req.body)
-    res.json({ message: `Song:${song.title} added successfully` });
-})
+const postSongs = (req, res) => {
+    var form = new formidable.IncomingForm();
+    form.parse(req, asyncHandler(async (err, fields, files) => {
+        const { title, artist } = fields;
+        const { file } = files;
+        if (!title || !artist || !file) {
+            res.status(400);
+            throw new Error('Please enter all fields');
+        }
+        const file1 = fs.readFileSync(file.filepath)
+        const song = await Song.create({
+            title, artist, source: {
+                file: file1, filename: file.originalFilename, mimetype: file.mimetype
+            }
+        })
+        res.json({ message: `Song:${song.title} added successfully` });
+    }))
+}
+
 
 const updateSongs = asyncHandler(async (req, res) => {
     if (mongoose.Types.ObjectId.isValid(req.params.id)) {

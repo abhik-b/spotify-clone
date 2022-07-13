@@ -3,52 +3,57 @@ import Link from 'next/link';
 
 
 const Songs = () => {
-    return <section className='my-12 flex flex-col md:max-w-[320px]'>
+    return <section className='my-12 flex flex-col col-span-2'>
         <h2 className='font-[600] text-xl'>Recent Songs</h2>
-        <ul className='my-4'>
-            <li className='song recent-song-element'>
-                <div className="avatar">
-                    <div className="w-10 rounded-full">
-                        <img src="https://placeimg.com/192/192/people" />
+        <ul className='my-12 flex gap-8'>
+            <li>
+                <div className="card w-56 h-72 shadow-xl image-full hover:scale-105 transition ease-in">
+                    <figure><img src="https://placeimg.com/400/225/songs" alt="Song1" />
+                    </figure>
+                    <div className="card-body px-4 gap-0 items-start self-end pb-3">
+                        <h2 className="card-title text-white text-2xl">Song 1</h2>
+                        <p className="text-gray-200 text-xs">Artist 1</p>
                     </div>
                 </div>
-                <p>Song 1</p>
-                <p>Artist 1</p>
             </li>
-            <li className='song recent-song-element'>
-                <div className="avatar">
-                    <div className="w-10 rounded-full">
-                        <img src="https://placeimg.com/150/150/people" />
+            <li>
+                <div className="card w-56 h-72 shadow-xl image-full hover:scale-105 transition ease-in">
+                    <figure><img src="https://placeimg.com/400/225/arch" alt="Song1" />
+                    </figure>
+                    <div className="card-body px-4 gap-0 items-start self-end pb-3">
+                        <h2 className="card-title text-white text-2xl">Song 2</h2>
+                        <p className="text-gray-200 text-xs">Artist 2</p>
                     </div>
                 </div>
-                <p>Songabcdefghiu 2</p>
-                <p>Artist 2</p>
             </li>
-            <li className='song recent-song-element'>
-                <div className="avatar">
-                    <div className="w-10 rounded-full">
-                        <img src="https://placeimg.com/459/457/people" />
+            <li>
+                <div className="card w-56 h-72 shadow-xl image-full hover:scale-105 transition ease-in">
+                    <figure><img src="https://placeimg.com/400/225/people" alt="Song1" />
+                    </figure>
+                    <div className="card-body px-4 gap-0 items-start self-end pb-3">
+                        <h2 className="card-title text-white text-2xl">Song 3</h2>
+                        <p className="text-gray-200 text-xs">Artist 3</p>
                     </div>
                 </div>
-                <p>Song 3</p>
-                <p>Artistabcdefghiu 3</p>
             </li>
-            <li className='song recent-song-element'>
-                <div className="avatar">
-                    <div className="w-10 rounded-full">
-                        <img src="https://placeimg.com/200/200/people" />
+
+
+            <li>
+                <Link href="/add-songs" passHref>
+                    <div className="card  w-56 h-72  outline outline-offset-2 outline-1 hover:cursor-pointer hover:scale-105 transition ease-in">
+                        <div className="card-body px-2 grid place-items-center">
+
+                            + Add Songs
+                        </div>
                     </div>
-                </div>
-                <p>Songabcdefghiu 4</p>
-                <p>Artistabcdefghiu 4</p>
+                </Link>
             </li>
         </ul>
-        <div className='recent-song-element self-center md:self-stretch'>
-            <Link href="/hello" passHref>
-                <a className='btn btn-primary btn-wide hover:bg-zinc-800 hover:shadow-xl 
-                md:btn-block text-white '>Add Songs</a>
-            </Link>
-        </div>
+
+
+
+
+
     </section>;
 };
 export default Songs;

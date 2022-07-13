@@ -1,5 +1,5 @@
 import '../styles/globals.css'
-
+import Footer from '../components/Footer';
 import { SessionProvider } from "next-auth/react"
 import ProtectedRouteHOC from '../components/ProtectedRouteHOC'
 import Navbar from '../components/Navbar'
@@ -11,10 +11,13 @@ export default function App({
   return (
     <SessionProvider session={session} basePath='/artist/api/auth'>
       <ProtectedRouteHOC router={router}>
-        <div className='px-8 sm:px-12 md:px-16 py-5'>
-          <Navbar />
-          <Component {...pageProps} />
-        </div>
+        <>
+          <div className='px-8 sm:px-12 md:px-16 py-5'>
+            <Navbar />
+            <Component {...pageProps} />
+          </div>
+          <Footer />
+        </>
       </ProtectedRouteHOC>
     </SessionProvider>
   )
