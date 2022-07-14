@@ -8,7 +8,6 @@ var bodyParser = require("body-parser");
 
 const { errorHandler } = require('./middlewares/errorMiddleware');
 const { connectDB } = require('./config/db');
-const { options } = require("./routes/songsRoutes");
 
 connectDB();
 

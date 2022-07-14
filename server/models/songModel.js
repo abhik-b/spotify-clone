@@ -18,7 +18,7 @@ const songSchema = new mongoose.Schema({
     },
     "artist": String,
     "source": {
-        file: { type: Buffer, required: true },
+        fileID: { type: String, required: true },
         filename: { type: String, required: true },
         mimetype: { type: String, required: true }
     }

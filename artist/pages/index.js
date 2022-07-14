@@ -4,13 +4,16 @@ import styles from '../styles/Home.module.css'
 import Navbar from '../components/Navbar';
 import Songs from '../components/Songs';
 import Playlists from '../components/Playlists';
-import { useEffect } from 'react';
+import * as React from 'react';
 
 
 export default function Home() {
-  useEffect(() => {
-    fetch('http://localhost:8000/api/songs/').then(res => res.json()).then(data => { console.log(data) })
-  }, []);
+
+
+
+
+
+
   return (
     <div>
       <Head>

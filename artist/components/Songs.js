@@ -3,39 +3,37 @@ import Link from 'next/link';
 
 
 const Songs = () => {
+    const [songs, setSongs] = React.useState([])
+    React.useEffect(() => {
+        fetch('http://localhost:8000/api/songs/')
+            .then(res => res.json())
+            .then(data => {
+                data.map(song => {
+                    console.log(`http://localhost:8000/api/songs/file/${song.source.filename}`);
+                })
+                setSongs(data)
+            }).catch(err => console.err(err))
+    }, []);
     return <section className='my-12 flex flex-col col-span-2'>
         <h2 className='font-[600] text-xl'>Recent Songs</h2>
         <ul className='my-12 flex gap-8'>
-            <li>
-                <div className="card w-56 h-72 shadow-xl image-full hover:scale-105 transition ease-in">
-                    <figure><img src="https://placeimg.com/400/225/songs" alt="Song1" />
-                    </figure>
-                    <div className="card-body px-4 gap-0 items-start self-end pb-3">
-                        <h2 className="card-title text-white text-2xl">Song 1</h2>
-                        <p className="text-gray-200 text-xs">Artist 1</p>
+            {songs.map(song => {
+                return <li key={song._id}>
+                    <div className="card w-56 h-72 shadow-xl image-full hover:scale-105 transition ease-in">
+                        {song.source.mimetype.startsWith('image') ?
+                            <img src={`http://localhost:8000/api/songs/file/${song.source.filename}`} />
+                            :
+                            <audio
+                                src={`http://localhost:8000/api/songs/file/${song.source.filename}`}
+                                controls />}
+                        <div className="card-body px-4 gap-0 items-start self-end pb-3">
+                            <h2 className="card-title text-white text-2xl">{song.title}</h2>
+                            <p className="text-gray-200 text-xs">{song.artist}</p>
+                        </div>
                     </div>
-                </div>
-            </li>
-            <li>
-                <div className="card w-56 h-72 shadow-xl image-full hover:scale-105 transition ease-in">
-                    <figure><img src="https://placeimg.com/400/225/arch" alt="Song1" />
-                    </figure>
-                    <div className="card-body px-4 gap-0 items-start self-end pb-3">
-                        <h2 className="card-title text-white text-2xl">Song 2</h2>
-                        <p className="text-gray-200 text-xs">Artist 2</p>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div className="card w-56 h-72 shadow-xl image-full hover:scale-105 transition ease-in">
-                    <figure><img src="https://placeimg.com/400/225/people" alt="Song1" />
-                    </figure>
-                    <div className="card-body px-4 gap-0 items-start self-end pb-3">
-                        <h2 className="card-title text-white text-2xl">Song 3</h2>
-                        <p className="text-gray-200 text-xs">Artist 3</p>
-                    </div>
-                </div>
-            </li>
+                </li>
+            })}
+
 
 
             <li>

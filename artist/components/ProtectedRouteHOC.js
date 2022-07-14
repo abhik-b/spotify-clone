@@ -16,7 +16,6 @@ const ProtectedRouteHOC = ({ children, router }) => {
                 router.push('/profile')
             }
         }
-
     }, [user])
 
     return <AuthContext.Provider value={[user, mutate]}>{children}</AuthContext.Provider>;
