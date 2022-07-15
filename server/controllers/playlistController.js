@@ -3,6 +3,10 @@ const Playlist = require('../models/playlistModel')
 const User = require('../models/userModel')
 const { Song } = require('../models/songModel')
 
+const getAllPlaylists = asyncHandler(async (req, res) => {
+    const playlists = await Playlist.find()
+    res.json(playlists);
+})
 const getPlaylists = asyncHandler(async (req, res) => {
     const playlists = await Playlist.find({ user: req.user._id })
     res.json({ message: `AllPlaylists of user : ${req.user.name}`, playlists });
@@ -10,13 +14,13 @@ const getPlaylists = asyncHandler(async (req, res) => {
 
 const getPlaylist = asyncHandler(async (req, res) => {
     const playlist = await Playlist.findById(req.params.playlistID)
-    const songs = await Song.find({ _id: playlist.songs })
-    const user = await User.findOne({ _id: req.user._id })
+    await playlist.populate({ path: 'songs', select: 'title artist' })
+    // const songs = await Song.find({ _id: playlist.songs })
     if (!playlist) {
         res.status(404)
         throw new Error('Playlist not found')
     }
-    res.json({ message: 'Particular Playlist', playlist, playlists: user.playlists, songs });
+    res.json({ message: `Playlist for ${playlist.name}`, playlist });
 })
 
 
@@ -72,4 +76,4 @@ const removeSongsFromPlaylist = asyncHandler(async (req, res) => {
     res.json({ message: 'Song removed from playlist', playlist })
 })
 
-module.exports = { getPlaylists, getPlaylist, createPlaylist, addSongsToPlaylist, removeSongsFromPlaylist }
+module.exports = { getAllPlaylists, getPlaylists, getPlaylist, createPlaylist, addSongsToPlaylist, removeSongsFromPlaylist }

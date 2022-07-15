@@ -3,36 +3,29 @@ import Link from 'next/link';
 
 
 const Playlists = () => {
+    const [playLists, setPlayLists] = React.useState([])
+    React.useEffect(() => {
+        fetch('http://localhost:8000/api/playlists/?limit=3')
+            .then(res => res.json())
+            .then(data => {
+                setPlayLists(data)
+            }).catch(err => console.error(err))
+    }, []);
     return <section className='my-12 flex flex-col '>
         <h2 className='font-[600] text-xl'>Recent Playlists</h2>
         <ul className='my-2'>
-            <li className='playlist recent-playlist-element'>
-                <div className="avatar">
-                    <div className="w-10 rounded-full">
-                        <img src="https://placeimg.com/192/192/people" />
+            {playLists.map(playlist => {
+                return <li key={playlist._id}
+                    className='playlist recent-playlist-element'>
+                    <div className="avatar">
+                        <div className="w-10 rounded-full">
+                            <img src={playlist.coverImage} />
+                        </div>
                     </div>
-                </div>
-                <p>Song 1</p>
-                <p>Artist 1</p>
-            </li>
-            <li className='playlist recent-playlist-element'>
-                <div className="avatar">
-                    <div className="w-10 rounded-full">
-                        <img src="https://placeimg.com/150/150/people" />
-                    </div>
-                </div>
-                <p>Songabcdefghiu 2</p>
-                <p>Artist 2</p>
-            </li>
-            <li className='playlist recent-playlist-element'>
-                <div className="avatar">
-                    <div className="w-10 rounded-full">
-                        <img src="https://placeimg.com/459/457/people" />
-                    </div>
-                </div>
-                <p>Song 3</p>
-                <p>Artistabcdefghiu 3</p>
-            </li>
+                    <p>{playlist.name}</p>
+                    <p>Songs : {playlist.songs.length}</p>
+                </li>
+            })}
 
         </ul>
         <div className='recent-playlist-element self-center md:self-stretch'>

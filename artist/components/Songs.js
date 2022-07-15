@@ -1,36 +1,45 @@
 import * as React from 'react';
 import Link from 'next/link';
 
+const truncate = (input) => input.length > 25 ? `${input.substring(0, 20)}...` : input;
+
+
+
 
 const Songs = () => {
     const [songs, setSongs] = React.useState([])
     React.useEffect(() => {
-        fetch('http://localhost:8000/api/songs/')
+        fetch('http://localhost:8000/api/songs/?limit=2')
             .then(res => res.json())
             .then(data => {
                 data.map(song => {
-                    console.log(`http://localhost:8000/api/songs/file/${song.source.filename}`);
+                    console.log(song);
                 })
                 setSongs(data)
-            }).catch(err => console.err(err))
+            }).catch(err => console.error(err))
     }, []);
+
+
     return <section className='my-12 flex flex-col col-span-2'>
         <h2 className='font-[600] text-xl'>Recent Songs</h2>
-        <ul className='my-12 flex gap-8'>
+        <ul className='my-8 flex gap-8'>
             {songs.map(song => {
                 return <li key={song._id}>
-                    <div className="card w-56 h-72 shadow-xl image-full hover:scale-105 transition ease-in">
-                        {song.source.mimetype.startsWith('image') ?
-                            <img src={`http://localhost:8000/api/songs/file/${song.source.filename}`} />
-                            :
-                            <audio
-                                src={`http://localhost:8000/api/songs/file/${song.source.filename}`}
-                                controls />}
-                        <div className="card-body px-4 gap-0 items-start self-end pb-3">
-                            <h2 className="card-title text-white text-2xl">{song.title}</h2>
+                    <div className="card w-56 h-84 shadow-xl image-full hover:scale-105 transition ease-in">
+                        <div>
+                            <img src={song.coverImage} alt={song.title} className="h-72 object-cover" />
+                        </div>
+
+                        <div className="card-body px-4 gap-1 items-start self-end pb-3">
+                            <h2 className="card-title text-white text-2xl">{truncate(song.title)}</h2>
                             <p className="text-gray-200 text-xs">{song.artist}</p>
                         </div>
+
                     </div>
+                    {/* <div>
+                        <audio
+                            src={`http://localhost:8000/api/songs/file/${song.audio?.filename}`} controls autoPlay={false} />
+                    </div> */}
                 </li>
             })}
 

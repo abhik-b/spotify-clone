@@ -2,30 +2,12 @@ const asyncHandler = require('express-async-handler')
 const { Song } = require('../models/songModel')
 const mongoose = require('mongoose')
 
-
-
-// const connect = mongoose.createConnection(process.env.MONGO_URI,
-//     {
-//         useNewUrlParser: true,
-//         useUnifiedTopology: true
-//     });
-
-// let gfs;
-
-// connect.once('open', () => {
-//     // initialize stream
-//     gfs = new mongoose.mongo.GridFSBucket(connect.db, {
-//         bucketName: "fileuploads"
-//     });
-// });
-
-
-
-
-
-
 const getSongs = asyncHandler(async (req, res) => {
-    const songs = await Song.find()
+    const songs = await Song.find().select(`-audio`).limit(req.query?.limit)
+    res.json(songs);
+})
+const getSongsForPlayList = asyncHandler(async (req, res) => {
+    const songs = await Song.find().select(`title artist _id`)
     res.json(songs);
 })
 
@@ -39,7 +21,7 @@ const postSongs = asyncHandler(async (req, res) => {
         throw new Error('Please enter all fields');
     }
     const song = await Song.create({
-        title, artist, source: {
+        ...req.body, audio: {
             fileID: file.id,
             filename: file.filename,
             mimetype: file.mimetype
@@ -93,4 +75,4 @@ const getFile = asyncHandler(async (req, res) => {
     })
 })
 
-module.exports = { getSongs, postSongs, updateSongs, getFile };
+module.exports = { getSongs, postSongs, updateSongs, getFile, getSongsForPlayList };

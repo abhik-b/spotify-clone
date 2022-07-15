@@ -10,8 +10,7 @@ Authorization: Bearer {{token1}}
 ###
 
 
-get {{hostname}}/api/playlists/{{playlist_id}}
-Authorization: Bearer {{token1}}
+get {{hostname}}/api/playlists/62d0d6da2e58d29e7935e91e
 
 
 

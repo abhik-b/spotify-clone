@@ -9,11 +9,6 @@ import * as React from 'react';
 
 export default function Home() {
 
-
-
-
-
-
   return (
     <div>
       <Head>
@@ -25,9 +20,6 @@ export default function Home() {
         <Playlists />
         <Songs />
       </div>
-      {/* <FillerStats /> */}
-
-
     </div>
   )
 }

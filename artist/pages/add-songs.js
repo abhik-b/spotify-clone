@@ -1,22 +1,24 @@
 import Head from 'next/head'
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 const AddSongs = () => {
     const [title, setTitle] = useState('');
     const [artist, setArtist] = useState('');
-    const [source, setSource] = useState(null);
+    const [audio, setAudio] = useState(null);
+    const [coverImage, setCoverImage] = useState('');
+
+    const ref = useRef();
+
+
+
     const onSubmit = async (e) => {
         e.preventDefault();
-        console.log(title, artist, source.name, source.type, source);
-        const song = {
-            "file": source,
-            "filename": source.name,
-            "mimetype": source.type
-        }
+
         const formdata = new FormData();
         formdata.append('title', title);
         formdata.append('artist', artist);
-        formdata.append('file', source);
+        formdata.append('coverImage', coverImage);
+        formdata.append('audio', audio);
 
         const message = await fetch('http://localhost:8000/api/songs/',
             {
@@ -24,7 +26,16 @@ const AddSongs = () => {
                 body: formdata,
             });
         console.log(message)
+
+        setTitle('');
+        setArtist('');
+        setAudio(null);
+        setCoverImage('');
+        ref.current.value = ""
     }
+
+
+
     return <div>
         <Head>
             <title>Artist App - Add Songs</title>
@@ -42,6 +53,7 @@ const AddSongs = () => {
                         className="input input-bordered w-full max-w-xs"
                         value={title} onChange={e => setTitle(e.target.value)} />
                 </div>
+
                 <div className="form-control w-full max-w-xs">
                     <label className="label">
                         <span className="label-text">Artist</span>
@@ -51,6 +63,17 @@ const AddSongs = () => {
                         className="input input-bordered rounded w-full max-w-xs"
                         value={artist} onChange={e => setArtist(e.target.value)} />
                 </div>
+
+                <div className="form-control w-full max-w-xs">
+                    <label className="label">
+                        <span className="label-text">Cover Image URL</span>
+                    </label>
+                    <input type="text"
+                        placeholder="Type here"
+                        className="input input-bordered rounded w-full max-w-xs"
+                        value={coverImage} onChange={e => setCoverImage(e.target.value)} />
+                </div>
+
                 <div className="form-control w-full max-w-xs">
                     <label htmlFor="formFile" className="label  inline-block mb-2 text-gray-700">
                         <span className='label-text'>Default file input example</span>
@@ -59,14 +82,14 @@ const AddSongs = () => {
                                    text-gray-700 bg-white bg-clip-padding
                                     border border-solid border-gray-300
                                     rounded"
+                        ref={ref}
                         type="file" id="formFile"
-                        onChange={(e) => setSource(e.target.files[0])} />
+                        onChange={(e) => setAudio(e.target.files[0])} />
                 </div>
                 <button type='submit' className='btn btn-primary'>Submit</button>
             </form>
 
         </div>
-        {/* <FillerStats /> */}
 
     </div>;
 };

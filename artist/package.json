@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "daisyui": "^2.19.0",
+    "multiselect-react-dropdown": "^2.0.25",
     "next": "12.2.2",
     "next-auth": "^4.9.0",
     "react": "18.2.0",

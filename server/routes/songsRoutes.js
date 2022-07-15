@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { getSongs, postSongs, updateSongs, getFile } = require('../controllers/songController');
+const { getSongs, postSongs, updateSongs, getFile, getSongsForPlayList } = require('../controllers/songController');
 const multer = require('multer');
 const { GridFsStorage } = require('multer-gridfs-storage');
 const crypto = require('crypto');
@@ -28,9 +28,10 @@ const storage = new GridFsStorage({
 const upload = multer({ storage });
 
 
-router.route('/').get(getSongs).post(upload.single('file'), postSongs)
+router.route('/').get(getSongs).post(upload.single('audio'), postSongs)
 router.route("/:id").put(updateSongs).delete(updateSongs);
 router.route("/file/:filename").get(getFile)
+router.route("/forPlaylists/").get(getSongsForPlayList)
 
 
 module.exports = router;
