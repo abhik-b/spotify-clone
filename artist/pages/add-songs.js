@@ -86,7 +86,7 @@ const AddSongs = () => {
                         type="file" id="formFile"
                         onChange={(e) => setAudio(e.target.files[0])} />
                 </div>
-                <button type='submit' className='btn btn-primary'>Submit</button>
+                <button type='submit' className='btn btn-primary my-8 w-full'>Submit</button>
             </form>
 
         </div>

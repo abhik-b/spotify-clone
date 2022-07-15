@@ -2,9 +2,7 @@ import Head from 'next/head'
 import { useState, useRef } from 'react';
 import Multiselect from 'multiselect-react-dropdown';
 import { useSession } from 'next-auth/react';
-
-
-
+import { truncate } from '../components/Songs';
 
 
 export const getStaticProps = async context => {
@@ -95,10 +93,11 @@ const AddPlaylists = ({ songsProps }) => {
                         displayValue="title"
                         avoidHighlightFirstOption="true"
                         showArrow
+                        selectedValueDecorator={(option) => { return truncate(option, 7, 10) }}
                     />
 
                 </div>
-                <button type='submit' className='btn btn-primary'>Submit</button>
+                <button type='submit' className='btn btn-primary w-full'>Submit</button>
             </form>
 
         </div>

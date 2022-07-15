@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 
-const truncate = (input) => input.length > 25 ? `${input.substring(0, 20)}...` : input;
+export const truncate = (input, truncateLength = 20, wordLength = 25) => input.length > wordLength ? `${input.substring(0, truncateLength)}...` : input;
 
 
 
@@ -9,7 +9,7 @@ const truncate = (input) => input.length > 25 ? `${input.substring(0, 20)}...` :
 const Songs = () => {
     const [songs, setSongs] = React.useState([])
     React.useEffect(() => {
-        fetch('http://localhost:8000/api/songs/?limit=2')
+        fetch('http://localhost:8000/api/songs/?limit=3')
             .then(res => res.json())
             .then(data => {
                 data.map(song => {
@@ -20,9 +20,9 @@ const Songs = () => {
     }, []);
 
 
-    return <section className='my-12 flex flex-col col-span-2'>
+    return <section className='my-12 flex flex-col xl:col-span-2'>
         <h2 className='font-[600] text-xl'>Recent Songs</h2>
-        <ul className='my-8 flex gap-8'>
+        <ul className='my-8 flex flex-col items-center xl:flex-row gap-8'>
             {songs.map(song => {
                 return <li key={song._id}>
                     <div className="card w-56 h-84 shadow-xl image-full hover:scale-105 transition ease-in">
