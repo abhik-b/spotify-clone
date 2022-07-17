@@ -3,7 +3,8 @@ const { Song } = require('../models/songModel')
 const mongoose = require('mongoose')
 
 const getSongs = asyncHandler(async (req, res) => {
-    const songs = await Song.find().select(`-audio`).limit(req.query?.limit)
+    const songs = await Song.find().limit(req.query?.limit)
+    // const songs = await Song.find().select(`-audio`).limit(req.query?.limit)
     res.json(songs);
 })
 const getSongsForPlayList = asyncHandler(async (req, res) => {
@@ -69,7 +70,6 @@ const getFile = asyncHandler(async (req, res) => {
             res.status(400);
             throw new Error('File not found');
         }
-        console.log(files)
         res.set('Content-Type', files[0].contentType);
         gfs.openDownloadStream(files[0]._id).pipe(res);
     })

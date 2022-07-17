@@ -13,11 +13,12 @@ const mongoose = require('mongoose')
 // });
 const songSchema = new mongoose.Schema({
     "title": {
-        type: String
-
+        type: String,
+        required: true
     },
     "artist": String,
-    "coverImage": String,
+    "coverImage": { type: String, required: true },
+    "audioDuration": { type: Number, required: true, default: 0 },
     "audio": {
         fileID: { type: String, required: true },
         filename: { type: String, required: true },

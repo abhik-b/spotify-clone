@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSession, signIn, signOut } from 'next-auth/react'
 import useSWR from 'swr'
-import { getCurrentUser } from '../../fetchers/fetchUser'
+import { getCurrentUser } from '../../utility/fetchUser'
 
 export default function User() {
     const { data: session } = useSession()

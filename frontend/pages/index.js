@@ -1,9 +1,14 @@
 import Head from 'next/head'
+import { useState } from 'react'
+import AudioPlayer from '../components/AudioPlayer'
 import User from '../components/User'
 import styles from '../styles/Home.module.css'
 
-export default function Home() {
 
+
+
+export default function Home({ songs }) {
+  const [song, setSong] = useState(songs[0])
   return (
     <div className={styles.container}>
       <Head>
@@ -12,18 +17,31 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <User />
+      {/* <User /> */}
+      <ul>
+        {songs?.map(song => {
+          return <li key={song._id}>
+            <div>
+              <h2>{song.title}</h2>
+              <h3>{song.artist}</h3>
 
+            </div>
+          </li>
+        })}
+      </ul>
       {/* Get Songs */}
       {/* Like Songs Button which can add a song to user's liked songs array */}
 
-
+      <AudioPlayer
+        duration={song.audioDuration}
+        url={`http://localhost:8000/api/songs/file/${song.audio.filename}`} />
     </div>
   )
 
 }
 export const getStaticProps = async context => {
+  const songs = await fetch('http://localhost:8000/api/songs/').then(res => res.json())
   return {
-    props: {},
+    props: { songs },
   };
 };

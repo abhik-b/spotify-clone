@@ -1,15 +1,34 @@
 import Head from 'next/head'
 import { useState, useRef } from 'react';
 
+
+function getAudioDuration(e, next) {
+    var reader = new FileReader();
+    var audio = document.createElement('audio');
+    var file = e.target.files[0];
+    if (e.target.files && file) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            audio.src = e.target.result;
+            audio.addEventListener('loadedmetadata', function () {
+                var duration = audio.duration;
+                console.log("The duration of the song is of: " + duration + " seconds");
+                next(Math.floor(duration))
+            }, true);
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+
 const AddSongs = () => {
     const [title, setTitle] = useState('');
     const [artist, setArtist] = useState('');
     const [audio, setAudio] = useState(null);
+    const [audioDuration, setAudioDuration] = useState('');
     const [coverImage, setCoverImage] = useState('');
 
     const ref = useRef();
-
-
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -18,6 +37,7 @@ const AddSongs = () => {
         formdata.append('title', title);
         formdata.append('artist', artist);
         formdata.append('coverImage', coverImage);
+        formdata.append('audioDuration', audioDuration);
         formdata.append('audio', audio);
 
         const message = await fetch('http://localhost:8000/api/songs/',
@@ -84,13 +104,16 @@ const AddSongs = () => {
                                     rounded"
                         ref={ref}
                         type="file" id="formFile"
-                        onChange={(e) => setAudio(e.target.files[0])} />
+                        onChange={(e) => {
+                            getAudioDuration(e, function (time) {
+                                setAudioDuration(time)
+                            })
+                            setAudio(e.target.files[0])
+                        }} />
                 </div>
                 <button type='submit' className='btn btn-primary my-8 w-full'>Submit</button>
             </form>
-
         </div>
-
     </div>;
 };
 export default AddSongs;
